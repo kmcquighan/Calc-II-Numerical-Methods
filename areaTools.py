@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Copyright Kelly McQuighan 2017
+by Kelly McQuighan 2017
 
 These tools can be used to visualize different numerical integration schemes,
 and to compute the associated error. They can also be used to find the order of
@@ -17,7 +17,12 @@ import matplotlib as mpl
 mpl.rcParams['font.size'] = 17
 colors = ['#0058AF','#FF8000','#D682FF','#00693C','#E02102']
 styles = ['-',':','-',':','-']
-####### DO NOT CHANGE ANYTHING BELOW THIS LINE ##########
+
+"""
+This function is used to make the plot of what the approximation of the integral
+looks like for five different numerical methods: Left Riemann sum, Right Riemann sum,
+Midpoint rule, Trapezoid rule, and Simpson's rule.
+"""
 def plots(func, a,b,n,method,ax):
     
     ax.axvline(0.,color='#666666',linewidth=1)
@@ -87,7 +92,14 @@ def plots(func, a,b,n,method,ax):
     ax.set_xlabel('x')
     ax.set_ylabel('f(x)')
 
+"""
+This function is used to make the plot of what the approximation of the integral
+looks like for all five different numerical methods: Left Riemann sum, Right Riemann sum,
+Midpoint rule, Trapezoid rule, and Simpson's rule.
 
+It also makes a bar chart showing the size of the error for each method so that
+the user can quickly see which method is better for a specific fixed value of n.
+"""
 def plotArea(f,a,b,n):
 
     a = eval(a)
@@ -149,7 +161,11 @@ def plotArea(f,a,b,n):
 
     plt.show()
     
-
+"""
+This method plots the approximation three times, each time doubling the number of
+gridpoints used in the approximation. It also computes and outputs how the error
+decreases.
+"""
 def plot3Areas(f,a,b,n,method):
 
     a = eval(a)
@@ -193,7 +209,11 @@ def plot3Areas(f,a,b,n,method):
                  ha='left', va='top', fontsize=20, transform=ax0.transAxes) 
         
     plt.show()
-        
+
+"""
+This method is currently unused by the Notebook because it refreshes in an awkward way.
+Instead plot one method at a time using plot3Areas and a Dropdown box for the method type. 
+"""       
 def plotAllMethods(f,a,b,n):
 
     a = eval(a)
@@ -209,7 +229,11 @@ def plotAllMethods(f,a,b,n):
     plot3Areas(f,a,b,n,"trapezoid")
     plot3Areas(f,a,b,n,"simpson")
     plt.show()
-    
+
+"""
+This function approximates the integral using one of five possible numerical methods:
+Left Riemann sum, Right Riemann sum, Midpoint Rule, Trapezoid Rule, and Simpson's Rule.
+"""     
 def evalArea(func,a,b,n, method):
     
     dx = (b-a)/n
@@ -241,10 +265,22 @@ def evalArea(func,a,b,n, method):
     
     return area
 
+"""
+Checks if the error is near machine precision. If so it does not make sense to 
+compare how the error decreases as teh gridsizes increase. For example, evaluating
+a constant function using any of the methods will be exact, so the error should be machine
+precision.
+"""
 def check_error(err):
     epsilon = 7./3 - 4./3 -1
     return (err>100*epsilon)
     
+"""
+This function compares all five methods by making a log-log plot of the error. 
+
+The slope of each curve is computed and can be used to determine the order of each
+numerical method.
+"""
 def compareMethods(f,a,b):
     
     n = 8
